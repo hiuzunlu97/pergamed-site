@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Account — Sutura</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#4A0F1E">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+  .acct { max-width: 30rem; margin: 0 auto; padding: 56px 0 24px; }
+  .acct .lockup { display: flex; align-items: center; gap: 14px; margin-bottom: 30px; }
+  .acct .lockup img { width: 52px; height: 52px; border-radius: 13px; }
+  .acct .lockup span { font-size: 1.05rem; color: var(--graphite); font-variation-settings: "opsz" 18; }
+  .acct h1 { font-size: clamp(2rem, 6vw, 2.8rem); max-width: none; margin-bottom: 16px; }
+  .acct p { color: var(--ink); }
+  .acct .muted { color: var(--graphite); font-size: 0.95rem; }
+  .acct form { margin: 24px 0 8px; }
+  .acct label { display: block; font-size: 0.98rem; color: var(--bordeaux); margin: 18px 0 6px; font-variation-settings: "opsz" 18; }
+  .acct input[type=password], .acct input[type=text] {
+    width: 100%; font: inherit; font-size: 1.05rem; padding: 13px 14px; border-radius: 12px;
+    border: 1px solid var(--rule); background: var(--ivory-light); color: var(--ink);
+  }
+  .acct input:focus { outline: 2px solid var(--ember); outline-offset: 1px; border-color: var(--ember); }
+  .acct .show { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 0.92rem; color: var(--graphite); }
+  .acct .rules { font-size: 0.9rem; color: var(--graphite); margin-top: 8px; }
+  .acct .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+  .acct button.button { border: 0; cursor: pointer; font-family: inherit; }
+  .acct button[disabled] { opacity: .55; cursor: progress; }
+  .acct .msg { border-left: 3px solid var(--ember); padding: 4px 0 4px 16px; margin: 20px 0 0; }
+  .acct .msg.ok { border-color: #2F6B4F; }
+  .acct .state { min-height: 12rem; }
+  .acct .lang-switch { margin-top: 36px; font-size: 0.9rem; }
+  .spinner { width: 22px; height: 22px; border-radius: 50%; border: 2.5px solid var(--rule); border-top-color: var(--ember); animation: spin .9s linear infinite; display: inline-block; vertical-align: middle; margin-right: 10px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+</style>
+</head>
+<body>
+<header class="site-header"><div class="inner">
+<a class="wordmark" href="/" aria-label="Pergamed">Pergamed<i>.</i></a>
+</div></header>
+<main id="main">
+<section class="acct" aria-live="polite">
+  <div class="lockup"><img src="/assets/sutura.svg" alt="" width="52" height="52"><span data-t="appline"></span></div>
+  <div class="state" id="state">
+    <h1 data-t="loading.title"></h1>
+    <p><span class="spinner" aria-hidden="true"></span><span data-t="loading.body"></span></p>
+  </div>
+  <p class="lang-switch"><a href="#" id="lang-toggle"></a></p>
+</section>
+</main>
+<footer class="site-footer"><div class="inner">
+<div class="legalname"><span class="wm">Pergamed<i>.</i></span><a id="support-link" href="mailto:support@pergamed.com">support@pergamed.com</a></div>
+<nav aria-label="Legal"><a id="privacy-link" href="/privacy/"></a></nav>
+</div></footer>
+<noscript><p style="max-width:30rem;margin:0 auto;padding:0 20px 40px">This page needs JavaScript to complete your request. / Bu sayfanın isteğinizi tamamlaması için JavaScript gerekir.</p></noscript>
+
+<script>
+(function () {
+  "use strict";
+  // ---- Firebase project (public web config; not a secret) ----
+  var FIREBASE_API_KEY = "AIzaSyBdpN3tjj9cXedv0frtBkBX2qH0TkJ5Qqg";
+  var API = "https://identitytoolkit.googleapis.com/v1/";
+  // continueUrl is only followed if it points to one of these hosts (prevents open redirects).
+  var SAFE_CONTINUE_HOSTS = ["pergamed.com", "www.pergamed.com", "sutura-e0e6f.firebaseapp.com"];
+  var FALLBACK_RETURN = { en: "/sutura/", tr: "/tr/sutura/" };
+
+  var T = {
+    en: {
+      appline: "Sutura – Plastic Surgery · account",
+      "loading.title": "One moment",
+      "loading.body": "Checking your link…",
+      back: "Back to the app",
+      backHint: "If the app does not open, switch back to Sutura on your phone and sign in.",
+      // verify email
+      "verify.ok.title": "Email verified",
+      "verify.ok.body": "Your email address is confirmed. You can now sign in to Sutura with it.",
+      // change email (verifyAndChangeEmail)
+      "change.ok.title": "Email address updated",
+      "change.ok.body": "Your Sutura account now uses this email address. Sign in again with it.",
+      // reset password
+      "reset.title": "Choose a new password",
+      "reset.for": "For the account {email}.",
+      "reset.label": "New password",
+      "reset.label2": "Repeat new password",
+      "reset.show": "Show passwords",
+      "reset.rules": "At least 8 characters. A longer password is safer.",
+      "reset.submit": "Save new password",
+      "reset.saving": "Saving…",
+      "reset.ok.title": "Password changed",
+      "reset.ok.body": "Your new password is saved. Sign in to Sutura with it.",
+      "reset.err.short": "The password must be at least 8 characters.",
+      "reset.err.match": "The two passwords do not match.",
+      "reset.err.weak": "This password is too weak. Choose a longer one.",
+      // recover email
+      "recover.ok.title": "Email change undone",
+      "recover.ok.body": "Your account email is back to {email}. If you did not ask for the change, reset your password now.",
+      "recover.reset": "Send me a password reset link",
+      "recover.sent": "A password reset link has been sent to {email}.",
+      // errors
+      "err.title": "This link can't be used",
+      "err.expired": "The link has expired or has already been used. Request a new one from the Sutura app.",
+      "err.invalid": "The link is incomplete. Open it again from the email, or request a new one from the Sutura app.",
+      "err.disabled": "This account is disabled. Contact support if you think this is a mistake.",
+      "err.notfound": "No account was found for this link.",
+      "err.network": "We couldn't reach the server. Check your connection and try again.",
+      "err.generic": "Something went wrong. Try again, or request a new link from the Sutura app.",
+      "err.contact": "Need help? Write to {mail}.",
+      retry: "Try again",
+      privacy: "Privacy policy",
+      toggle: "Türkçe"
+    },
+    tr: {
+      appline: "Sutura – Plastic Surgery · hesap",
+      "loading.title": "Bir saniye",
+      "loading.body": "Bağlantınız kontrol ediliyor…",
+      back: "Uygulamaya dön",
+      backHint: "Uygulama açılmazsa telefonunuzda Sutura'ya geri dönüp giriş yapın.",
+      "verify.ok.title": "E-posta doğrulandı",
+      "verify.ok.body": "E-posta adresiniz onaylandı. Artık bu adresle Sutura'ya giriş yapabilirsiniz.",
+      "change.ok.title": "E-posta adresi güncellendi",
+      "change.ok.body": "Sutura hesabınız artık bu e-posta adresini kullanıyor. Bu adresle yeniden giriş yapın.",
+      "reset.title": "Yeni şifrenizi belirleyin",
+      "reset.for": "{email} hesabı için.",
+      "reset.label": "Yeni şifre",
+      "reset.label2": "Yeni şifre (tekrar)",
+      "reset.show": "Şifreleri göster",
+      "reset.rules": "En az 8 karakter. Daha uzun şifre daha güvenlidir.",
+      "reset.submit": "Yeni şifreyi kaydet",
+      "reset.saving": "Kaydediliyor…",
+      "reset.ok.title": "Şifre değiştirildi",
+      "reset.ok.body": "Yeni şifreniz kaydedildi. Sutura'ya bu şifreyle giriş yapın.",
+      "reset.err.short": "Şifre en az 8 karakter olmalı.",
+      "reset.err.match": "İki şifre aynı değil.",
+      "reset.err.weak": "Bu şifre çok zayıf. Daha uzun bir şifre seçin.",
+      "recover.ok.title": "E-posta değişikliği geri alındı",
+      "recover.ok.body": "Hesabınızın e-posta adresi yeniden {email} oldu. Değişikliği siz istemediyseniz şifrenizi hemen sıfırlayın.",
+      "recover.reset": "Bana şifre sıfırlama bağlantısı gönder",
+      "recover.sent": "{email} adresine şifre sıfırlama bağlantısı gönderildi.",
+      "err.title": "Bu bağlantı kullanılamıyor",
+      "err.expired": "Bağlantının süresi dolmuş ya da daha önce kullanılmış. Sutura uygulamasından yeni bir bağlantı isteyin.",
+      "err.invalid": "Bağlantı eksik. E-postadaki bağlantıyı yeniden açın ya da Sutura uygulamasından yeni bir bağlantı isteyin.",
+      "err.disabled": "Bu hesap devre dışı. Bir hata olduğunu düşünüyorsanız destek ekibine yazın.",
+      "err.notfound": "Bu bağlantıya ait bir hesap bulunamadı.",
+      "err.network": "Sunucuya ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin.",
+      "err.generic": "Bir sorun oluştu. Tekrar deneyin ya da Sutura uygulamasından yeni bir bağlantı isteyin.",
+      "err.contact": "Yardım için {mail} adresine yazın.",
+      retry: "Tekrar dene",
+      privacy: "Gizlilik politikası",
+      toggle: "English"
+    }
+  };
+
+  var q = new URLSearchParams(location.search);
+  var mode = q.get("mode");
+  var oobCode = q.get("oobCode");
+  var continueUrl = q.get("continueUrl");
+  var lang = pickLang(q.get("lang"));
+  var MAIL = { en: "support@pergamed.com", tr: "destek@pergamed.com" };
+  var stateEl = document.getElementById("state");
+  var lastRender = null;
+
+  function pickLang(param) {
+    var cand = (param || "").toLowerCase();
+    if (!cand) { try { cand = (navigator.language || "").toLowerCase(); } catch (e) { cand = ""; } }
+    return cand.indexOf("tr") === 0 ? "tr" : "en";
+  }
+  function t(key, vars) {
+    var s = (T[lang] && T[lang][key]) || T.en[key] || key;
+    if (vars) Object.keys(vars).forEach(function (k) { s = s.split("{" + k + "}").join(vars[k]); });
+    return s;
+  }
+  function esc(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : String(s); return d.innerHTML; }
+
+  function applyStatic() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-t]").forEach(function (el) { el.textContent = t(el.getAttribute("data-t")); });
+    document.getElementById("lang-toggle").textContent = t("toggle");
+    var pl = document.getElementById("privacy-link");
+    pl.textContent = t("privacy"); pl.href = lang === "tr" ? "/tr/gizlilik/" : "/privacy/";
+    var sl = document.getElementById("support-link");
+    sl.textContent = MAIL[lang]; sl.href = "mailto:" + MAIL[lang];
+    document.title = (lang === "tr" ? "Hesap" : "Account") + " — Sutura";
+  }
+  document.getElementById("lang-toggle").addEventListener("click", function (e) {
+    e.preventDefault(); lang = lang === "tr" ? "en" : "tr"; applyStatic(); if (lastRender) lastRender();
+  });
+
+  function safeReturnUrl() {
+    if (continueUrl) {
+      try {
+        var u = new URL(continueUrl);
+        if (u.protocol === "https:" && SAFE_CONTINUE_HOSTS.indexOf(u.hostname) !== -1) return u.href;
+      } catch (e) { /* ignore */ }
+    }
+    return FALLBACK_RETURN[lang];
+  }
+  function backButton() {
+    return '<div class="actions"><a class="button primary" id="back" href="' + esc(safeReturnUrl()) + '">' + esc(t("back")) + '</a></div>' +
+           '<p class="muted" style="margin-top:14px">' + esc(t("backHint")) + '</p>';
+  }
+
+  function api(method, body) {
+    return fetch(API + method + "?key=" + encodeURIComponent(FIREBASE_API_KEY), {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok) { var m = (j && j.error && j.error.message) || "UNKNOWN"; throw new Error(m); }
+        return j;
+      });
+    }, function () { throw new Error("NETWORK"); });
+  }
+  function errKey(code) {
+    code = String(code || "");
+    if (/EXPIRED_OOB_CODE|INVALID_OOB_CODE/.test(code)) return "err.expired";
+    if (/MISSING_OOB_CODE|MISSING_PARAM|BAD_MODE/.test(code)) return "err.invalid";
+    if (/USER_DISABLED/.test(code)) return "err.disabled";
+    if (/EMAIL_NOT_FOUND|USER_NOT_FOUND/.test(code)) return "err.notfound";
+    if (/NETWORK/.test(code)) return "err.network";
+    if (/WEAK_PASSWORD/.test(code)) return "reset.err.weak";
+    return "err.generic";
+  }
+  function showError(code, retryFn) {
+    lastRender = function () {
+      var key = errKey(code);
+      stateEl.innerHTML = '<h1>' + esc(t("err.title")) + '</h1>' +
+        '<p>' + esc(t(key)) + '</p>' +
+        (retryFn && key === "err.network" ? '<div class="actions"><button class="button secondary" id="retry">' + esc(t("retry")) + '</button></div>' : "") +
+        '<p class="muted" style="margin-top:18px">' + t("err.contact", { mail: '<a href="mailto:' + MAIL[lang] + '">' + MAIL[lang] + '</a>' }) + '</p>';
+      var rb = document.getElementById("retry"); if (rb) rb.addEventListener("click", retryFn);
+    };
+    lastRender();
+  }
+  function showOk(titleKey, bodyKey, vars, extraHtml, after) {
+    lastRender = function () {
+      stateEl.innerHTML = '<h1>' + esc(t(titleKey)) + '<span class="dot">.</span></h1>' +
+        '<p>' + esc(t(bodyKey, vars)) + '</p>' + (extraHtml ? extraHtml() : "") + backButton();
+      if (after) after();
+    };
+    lastRender();
+  }
+
+  // ---- handlers ----
+  function handleVerify(titleKey, bodyKey) {
+    api("accounts:update", { oobCode: oobCode })
+      .then(function () { showOk(titleKey, bodyKey); })
+      .catch(function (e) { showError(e.message, function () { handleVerify(titleKey, bodyKey); }); });
+  }
+
+  function handleReset() {
+    api("accounts:resetPassword", { oobCode: oobCode })   // verify only; does not consume the code
+      .then(function (info) { renderResetForm(info.email || ""); })
+      .catch(function (e) { showError(e.message, handleReset); });
+  }
+  function renderResetForm(email, errMsg) {
+    lastRender = function () {
+      stateEl.innerHTML =
+        '<h1>' + esc(t("reset.title")) + '</h1>' +
+        (email ? '<p class="muted">' + esc(t("reset.for", { email: email })) + '</p>' : "") +
+        '<form id="reset-form" novalidate>' +
+          '<input type="text" name="username" autocomplete="username" value="' + esc(email) + '" hidden>' +
+          '<label for="pw1">' + esc(t("reset.label")) + '</label>' +
+          '<input id="pw1" type="password" autocomplete="new-password" minlength="8" required>' +
+          '<label for="pw2">' + esc(t("reset.label2")) + '</label>' +
+          '<input id="pw2" type="password" autocomplete="new-password" minlength="8" required>' +
+          '<label class="show"><input type="checkbox" id="showpw"> ' + esc(t("reset.show")) + '</label>' +
+          '<p class="rules">' + esc(t("reset.rules")) + '</p>' +
+          (errMsg ? '<p class="msg" role="alert">' + esc(errMsg) + '</p>' : "") +
+          '<div class="actions"><button class="button primary" type="submit" id="save">' + esc(t("reset.submit")) + '</button></div>' +
+        '</form>';
+      var f = document.getElementById("reset-form");
+      document.getElementById("showpw").addEventListener("change", function (e) {
+        ["pw1", "pw2"].forEach(function (id) { document.getElementById(id).type = e.target.checked ? "text" : "password"; });
+      });
+      document.getElementById("pw1").focus();
+      f.addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        var p1 = document.getElementById("pw1").value, p2 = document.getElementById("pw2").value;
+        if (p1.length < 8) return renderResetForm(email, t("reset.err.short"));
+        if (p1 !== p2) return renderResetForm(email, t("reset.err.match"));
+        var btn = document.getElementById("save"); btn.disabled = true; btn.textContent = t("reset.saving");
+        api("accounts:resetPassword", { oobCode: oobCode, newPassword: p1 })
+          .then(function () { showOk("reset.ok.title", "reset.ok.body"); })
+          .catch(function (e) {
+            if (/WEAK_PASSWORD/.test(e.message)) return renderResetForm(email, t("reset.err.weak"));
+            showError(e.message);
+          });
+      });
+    };
+    lastRender();
+  }
+
+  function handleRecover() {
+    api("accounts:resetPassword", { oobCode: oobCode })   // check code: returns the restored (old) email
+      .then(function (info) {
+        var email = info.email || "";
+        return api("accounts:update", { oobCode: oobCode }).then(function () {
+          showOk("recover.ok.title", "recover.ok.body", { email: email }, function () {
+            return '<div class="actions"><button class="button secondary" id="sendreset">' + esc(t("recover.reset")) + '</button></div><p id="sent" class="msg ok" hidden></p>';
+          }, function () {
+            var b = document.getElementById("sendreset");
+            b.addEventListener("click", function () {
+              b.disabled = true;
+              api("accounts:sendOobCode", { requestType: "PASSWORD_RESET", email: email })
+                .then(function () { var s = document.getElementById("sent"); s.textContent = t("recover.sent", { email: email }); s.hidden = false; b.remove(); })
+                .catch(function (e) { b.disabled = false; showError(e.message); });
+            });
+          });
+        });
+      })
+      .catch(function (e) { showError(e.message, handleRecover); });
+  }
+
+  applyStatic();
+  if (!oobCode || !mode) { showError("MISSING_PARAM"); return; }
+  if (FIREBASE_API_KEY.indexOf("__") === 0) { showError("CONFIG"); return; }
+  switch (mode) {
+    case "verifyEmail": handleVerify("verify.ok.title", "verify.ok.body"); break;
+    case "verifyAndChangeEmail": handleVerify("change.ok.title", "change.ok.body"); break;
+    case "resetPassword": handleReset(); break;
+    case "recoverEmail": handleRecover(); break;
+    default: showError("BAD_MODE");
+  }
+})();
+</script>
+</body>
+</html>
