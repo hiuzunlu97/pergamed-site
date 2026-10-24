@@ -28,27 +28,27 @@
 <main id="main">
 <div class="page legal">
 <h1>Privacy policy</h1>
-<p class="small">Last updated: 21 October 2026, version 2026-10-21. This version updates the contact addresses to pergamed.com and adds a section on this website; how data is processed has not changed.</p>
+<p class="small">Last updated: 23 October 2026, version 2026-10-23. Section 12 (this website) is specific to pergamed.com.</p>
 <p>This policy explains how the Sutura - Plastic Surgery mobile app ("Sutura") processes your personal data. It also serves as the information notice under Article 13 of the EU General Data Protection Regulation (GDPR), the UK GDPR and Article 10 of the Turkish Personal Data Protection Law No. 6698 (KVKK).</p>
-<p><strong>Controller:</strong> Pergamed<!-- PLACEHOLDER: publisher company name and address to be added -->. Contact: <a href="mailto:support@pergamed.com">support@pergamed.com</a>.</p>
+<p><strong>Controller:</strong> Pergamed (placeholder — the full name and address of the controller will be added once the publisher is finalised). Contact: <a href="mailto:support@pergamed.com">support@pergamed.com</a>.</p>
 
 <h2>In short</h2>
 <ul>
   <li>Sutura shows no ads and uses no analytics, tracking or crash-reporting tools.</li>
-  <li>Your logbook, shifts, quiz progress and profile details (name, hospital, department, etc.) are stored <strong>only on your device</strong>.</li>
-  <li>If you create an account, the server stores only your email address, account ID, country and email-consent choice.</li>
+  <li>Your logbook, shifts and quiz progress are stored <strong>only on your device</strong>. If you create an account, your profile details (name, hospital, department, title, residency start) are also saved to your account so they come back when you log in.</li>
+  <li>If you create an account, the server stores your email address, account ID, country, email-consent choice and profile details; if you join the weekly league, also your nickname and points (only the nickname is shown in the standings).</li>
   <li>Promotional and news emails are sent only if you explicitly opt in; the box is unticked by default and you can withdraw consent at any time.</li>
   <li>Payments are handled by Apple or Google; Sutura never sees your card details.</li>
 </ul>
 
 <h2>1. Information stored on your device</h2>
 <ul>
-  <li><strong>Profile:</strong> first and last name, hospital, department, title and residency start date — used only to address you on screen and show the length of your residency.</li>
+  <li><strong>Profile:</strong> first and last name, hospital, department, title and residency start date — used only to address you on screen, show your name on the logbook export and show the length of your residency. If you have an account it is also saved to your account (section 2).</li>
   <li><strong>Logbook:</strong> date of operation, procedure, your role and an optional note. Do not enter patient names, record numbers or anything that could identify a patient.</li>
   <li><strong>On-call shifts:</strong> date, type, end time and an optional note.</li>
   <li><strong>Preferences and progress:</strong> language, quiz answers and progress, followed journals, whether the intro tour has been shown.</li>
 </ul>
-<p>This information stays in the app's local storage, is never sent to a server and is deleted when you uninstall the app.</p>
+<p>This information stays in the app's local storage and is removed from the device when you uninstall the app or log out. Apart from the profile, it is never sent to a server.</p>
 
 <h2>2. Account data processed on the server</h2>
 <div class="table-wrap"><table>
@@ -56,9 +56,11 @@
   <tr><td>Email address, password (stored only as a hash), account ID, email-verification status</td><td>Creating the account, sign-in, email verification, password reset</td><td>Performance of a contract (GDPR Art. 6(1)(b); KVKK Art. 5(2)(c))</td><td>While your account exists; deleted when you delete the account</td></tr>
   <tr><td>Country and the resulting email language (Turkish for Türkiye, English elsewhere)</td><td>Applying the correct legal rules and choosing the email language</td><td>Legal obligation and legitimate interest (GDPR Art. 6(1)(c), (f))</td><td>While your account exists</td></tr>
   <tr><td>Marketing-email consent: given/not given, date and time, consent-text version, country, where it was collected (the app)</td><td>Proving your consent; not emailing you without it</td><td>Consent (GDPR Art. 6(1)(a); KVKK Art. 5(1)); keeping the record: legal obligation (GDPR Art. 7(1); Turkish e-commerce law)</td><td>While your account exists; a withdrawal is also recorded with its date. If you delete your account, only your email address and consent history are kept in a separate record for <strong>3 years</strong> to meet the statutory evidence requirement, then deleted automatically</td></tr>
-  <tr><td>Purchase data: account ID, Pro status, product type, store transaction ID</td><td>Unlocking Pro and restoring purchases</td><td>Performance of a contract (GDPR Art. 6(1)(b))</td><td>For the subscription and statutory retention periods</td></tr>
+  <tr><td>Profile: first and last name, hospital, department, title, residency start date</td><td>Restoring your profile when you log in on another device or after logging out</td><td>Performance of a contract (GDPR Art. 6(1)(b); KVKK Art. 5(2)(c))</td><td>While your account exists; deleted when you delete the account</td></tr>
+  <tr><td>Purchase data: account ID, Pro/Platinum status, product type, store transaction ID</td><td>Unlocking Pro/Platinum and restoring purchases</td><td>Performance of a contract (GDPR Art. 6(1)(b))</td><td>For the subscription and statutory retention periods</td></tr>
+  <tr><td>Weekly league (only if you join): the nickname you choose, your league (Bronze/Silver/Gold), your weekly points and the question number and time of each scoring answer</td><td>Building the weekly standings and verifying points on the server</td><td>Performance of a contract (GDPR Art. 6(1)(b); KVKK Art. 5(2)(c)) — a feature you request</td><td>Nickname and league while your account exists; weekly point records at most 1 year. Other users see only your nickname and points; your name and email are never shown</td></tr>
 </table></div>
-<p>Your profile, logbook, shifts and quiz data are not sent to the server even when you have an account.</p>
+<p>Your logbook, shifts and quiz data are not sent to the server even when you have an account.</p>
 
 <h2>3. Types of email</h2>
 <ul>
@@ -69,6 +71,7 @@
 <h2>4. Service providers (processors)</h2>
 <ul>
   <li><strong>Google Firebase (Google Ireland Ltd. / Google LLC):</strong> storing account and consent records. The database is hosted in the European Union; the authentication service may use Google's global infrastructure.</li>
+  <li><strong>Cloudflare, Inc. (USA; Cloudflare Email Sending):</strong> sending account emails (verification and password reset) from <code>noreply@pergamed.com</code>. Cloudflare receives only the recipient's email address and the email content (the action link). These emails are prepared on Google Firebase (Cloud Functions, EU region).</li>
   <li><strong>RevenueCat, Inc. (USA):</strong> validating in-app purchases and keeping your Pro status. RevenueCat receives only your account ID and the store's purchase data, not your email address.</li>
   <li><strong>Apple and Google:</strong> payments and subscriptions are processed by them under their own policies.</li>
   <li><strong>Bulk email provider:</strong> if one is used in future for marketing emails, it will receive only the email address, language and country of users who opted in. This section will be updated when a provider is chosen.</li>
@@ -91,7 +94,7 @@
 
 <h2>7. Other features that use the internet</h2>
 <ul>
-  <li><strong>Congresses:</strong> dates are downloaded from a public data file (GitHub Pages, <code>hiuzunlu97.github.io</code>).</li>
+  <li><strong>Congresses:</strong> dates are downloaded from a public data file (GitHub Pages); no personal data is sent.</li>
   <li><strong>Journals:</strong> titles, authors and dates of articles in the latest issue of journals you follow are retrieved from PubMed (<code>eutils.ncbi.nlm.nih.gov</code>) and Crossref (<code>api.crossref.org</code>). Requests contain only the journal's ISSN and, as these services ask, the app's support email address.</li>
 </ul>
 <p>These services can technically see your device's IP address; Sutura sends them nothing about you.</p>
