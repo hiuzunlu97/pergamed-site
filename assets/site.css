@@ -184,3 +184,18 @@ details > div { padding-top: 10px; max-width: 40rem; }
   .figures { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .figures b { font-size: 1.7rem; }
 }
+
+/* Sutura screenshot gallery */
+.gallery-section h2 { margin-bottom: 10px; }
+.gallery-intro { color: var(--graphite); margin: 0 0 28px; max-width: 60ch; }
+.gallery { display: grid; grid-auto-flow: column; grid-auto-columns: 232px; gap: 28px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding: 6px 4px 22px; margin: 0 -4px; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
+.gallery:focus-visible { outline: 2px solid var(--ember); outline-offset: 4px; }
+.shot { margin: 0; scroll-snap-align: start; }
+.phone { background: #1C1316; border-radius: 34px; padding: 9px; box-shadow: 0 18px 40px -18px rgba(74,15,30,.45); }
+.phone img { display: block; width: 100%; height: auto; aspect-ratio: 560 / 1217; border-radius: 26px; background: #EEF2F7; }
+.shot figcaption { margin-top: 14px; font-size: 1rem; color: var(--ink); text-align: center; font-variation-settings: "opsz" 16; }
+@media (max-width: 640px) {
+  .gallery { grid-auto-columns: 62vw; gap: 16px; scroll-snap-type: x mandatory; }
+  .shot { scroll-snap-align: center; }
+}
+@media (prefers-reduced-motion: no-preference) { .gallery { scroll-behavior: smooth; } }
