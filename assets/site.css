@@ -259,3 +259,23 @@ details > div { padding-top: 10px; max-width: 40rem; }
 }
 .parts .lede { margin-bottom: 48px; }
 .parts h3 { font-size: clamp(1.5rem, 2.2vw, 1.9rem); font-variation-settings: "opsz" 72; margin-bottom: 12px; }
+
+/* ---------- Sutura pages: colours of the Sutura logo (navy #173F6E, burgundy #7A1C2C, ivory #F1E6D3) ---------- */
+.theme-sutura {
+  --bordeaux: #173F6E;
+  --burgundy: #7A1C2C;
+  --ember: #7A1C2C;
+  --ember-deep: #7A1C2C;
+  --rule: #CFD3D6;
+}
+.theme-sutura .button.primary:hover { background: #7A1C2C; }
+.theme-sutura .band { background: #173F6E; }
+.theme-sutura .band p, .theme-sutura .band .lede { color: #DCE3EC; }
+.theme-sutura .band a { color: #F1E6D3; }
+.theme-sutura .band .mark, .theme-sutura .band .button.primary { background: #C46A78; }
+.theme-sutura .band .button.primary:hover { background: #F1E6D3; color: #173F6E; }
+.theme-sutura .scene .card { background: rgba(23,63,110,.9); }
+.theme-sutura .scene .card .kicker { color: #E7B9C0; }
+.theme-sutura .scene .card .n { color: #E7B9C0; }
+.theme-sutura .phone { box-shadow: 0 18px 40px -18px rgba(23,63,110,.45); }
+.theme-sutura .dot { color: #7A1C2C; }
