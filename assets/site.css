@@ -199,3 +199,63 @@ details > div { padding-top: 10px; max-width: 40rem; }
   .shot { scroll-snap-align: center; }
 }
 @media (prefers-reduced-motion: no-preference) { .gallery { scroll-behavior: smooth; } }
+
+/* ---------- About / story scenes ---------- */
+.eyebrow { font-size: 0.95rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ember-deep); margin: 0 0 22px; font-variation-settings: "opsz" 14; }
+.about-head { padding: 88px 0 24px; }
+.about-head h1 { max-width: 18ch; }
+.about-head .lede { margin: 30px 0 34px; max-width: 40rem; }
+.jump { display: flex; gap: 28px; flex-wrap: wrap; margin: 0; }
+.jump a { color: var(--bordeaux); text-decoration: none; border-bottom: 1.5px solid var(--ember); padding-bottom: 2px; }
+
+.scenes { margin: 72px calc(50% - 50vw) 0; }
+.scenes-title { max-width: 80rem; margin: 0 auto; padding: 0 40px 40px; }
+.scenes-title h2 { margin-bottom: 10px; }
+.scenes-title p { color: var(--graphite); font-size: 1.15rem; max-width: 34rem; margin: 0; }
+.scene { position: relative; }
+.scene .bg { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--ink); }
+.scene .bg img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.scene .bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28,19,22,0) 35%, rgba(28,19,22,.55) 100%); }
+.scene .txt { position: relative; margin-top: -62vh; margin-top: -62svh; padding: 0 40px 34vh; padding-bottom: 34svh; max-width: 80rem; margin-left: auto; margin-right: auto; }
+.scene .card { max-width: 34rem; background: rgba(74,15,30,.88); color: var(--ivory); padding: 30px 34px 26px; border-radius: 4px; box-shadow: 0 24px 60px -30px rgba(0,0,0,.6); }
+.scene .card p { margin: 0; font-size: clamp(1.15rem, 1.7vw, 1.35rem); line-height: 1.5; color: #F3E9DA; font-variation-settings: "opsz" 24; }
+.scene .card .kicker { font-size: 0.9rem; letter-spacing: 0.14em; text-transform: uppercase; color: #F4C9A8; margin-bottom: 12px; font-variation-settings: "opsz" 14; }
+.scene .card .n { display: block; font-size: 2.2rem; line-height: 1; color: var(--ember); margin-bottom: 10px; font-variation-settings: "opsz" 96; }
+.js-scenes .scene .card { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s ease; }
+.js-scenes .scene .card.in { opacity: 1; transform: none; }
+
+.pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 48px; }
+.pillars > div { border-top: 2px solid var(--ember); padding-top: 18px; }
+.pillars p { margin: 0; }
+.about-foot .statement { font-size: clamp(1.25rem, 2vw, 1.6rem); line-height: 1.4; color: var(--bordeaux); max-width: 44rem; font-variation-settings: "opsz" 36; }
+.small-h { font-size: 1.35rem !important; margin: 64px 0 14px !important; }
+.sources { padding-left: 1.3em; color: var(--graphite); font-size: 0.98rem; max-width: 52rem; }
+.credits { font-size: 0.88rem; color: var(--graphite); max-width: 60rem; margin-top: 28px; }
+
+.teaser { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.teaser picture img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 4px; }
+.teaser p { color: var(--graphite); font-size: 1.12rem; max-width: 30rem; }
+
+.why-sutura { margin-top: 96px; }
+.why-sutura .band { margin: 0; padding: 88px max(40px, calc(50vw - 40rem)); }
+
+@media (max-width: 900px) {
+  .teaser { grid-template-columns: 1fr; gap: 28px; }
+  .pillars { grid-template-columns: 1fr; gap: 28px; }
+}
+@media (max-width: 600px) {
+  .about-head { padding-top: 56px; }
+  .scenes-title { padding: 0 20px 28px; }
+  .why-sutura .band { padding: 64px 20px; }
+  .scene .txt { padding: 0 16px 30svh; margin-top: -55svh; }
+  .scene .card { padding: 22px 22px 20px; }
+  .teaser picture img { aspect-ratio: 4 / 5; }
+}
+/* Reduced motion: no sticky layering, no fades; a plain sequence of photo + text */
+@media (prefers-reduced-motion: reduce) {
+  .scene .bg { position: relative; height: 62vh; }
+  .scene .txt { margin-top: 0; padding: 0 0 48px; }
+  .scene .card { max-width: none; border-radius: 0; box-shadow: none; padding: 26px 40px; }
+}
+.parts .lede { margin-bottom: 48px; }
+.parts h3 { font-size: clamp(1.5rem, 2.2vw, 1.9rem); font-variation-settings: "opsz" 72; margin-bottom: 12px; }
