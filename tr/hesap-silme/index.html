@@ -23,7 +23,7 @@
 <header class="site-header"><div class="inner">
 <a class="wordmark" href="/tr/" aria-label="Pergamed">Pergamed<i>.</i></a>
 <nav class="site-nav" aria-label="Ana menü"><a href="/tr/sutura/">Ürünler</a><a href="/tr/hakkimizda/">Hakkımızda</a><a href="/tr/destek/">Destek</a></nav>
-<a class="lang" href="/delete-account/" hreflang="en" lang="en">EN</a>
+<details class="langs"><summary aria-label="Dil: Türkçe">TR</summary><ul><li><a href="/delete-account/" hreflang="en" lang="en">English</a></li><li><a href="/tr/hesap-silme/" hreflang="tr" lang="tr" aria-current="true">Türkçe</a></li></ul></details>
 </div></header>
 <main id="main">
 <div class="page legal">
@@ -60,6 +60,11 @@
 </div>
 </main>
 
+<script>
+(function(){var d=document.querySelector('.langs');if(!d)return;
+document.addEventListener('click',function(e){if(!d.contains(e.target))d.removeAttribute('open');});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')d.removeAttribute('open');});})();
+</script>
 <footer class="site-footer"><div class="inner">
 <div class="legalname"><span class="wm">Pergamed<i>.</i></span>© 2026 Pergamed<br>
 <a href="mailto:destek@pergamed.com">destek@pergamed.com</a></div>

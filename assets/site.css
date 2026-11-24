@@ -279,3 +279,21 @@ details > div { padding-top: 10px; max-width: 40rem; }
 .theme-sutura .scene .card .n { color: #E7B9C0; }
 .theme-sutura .phone { box-shadow: 0 18px 40px -18px rgba(23,63,110,.45); }
 .theme-sutura .dot { color: #7A1C2C; }
+
+/* ---------- language menu (six languages) ---------- */
+details.langs { position: relative; font-size: 0.95rem; font-variation-settings: "opsz" 16; border: 0; padding: 0; max-width: none; }
+.langs summary { list-style: none; cursor: pointer; font-size: 0.95rem; font-weight: 400; color: var(--graphite); border: 1px solid var(--rule); padding: 7px 12px; border-radius: 999px; display: flex; align-items: center; gap: 7px; }
+.langs summary::-webkit-details-marker { display: none; }
+.langs summary::after, details.langs[open] summary::after { content: ""; position: static; font-size: 0; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); }
+.langs summary:hover, .langs[open] summary { color: var(--bordeaux); border-color: var(--bordeaux); }
+.langs ul { position: absolute; right: 0; top: calc(100% + 8px); z-index: 20; margin: 0; padding: 8px; list-style: none; min-width: 12.5rem; background: #FBF5EA; border: 1px solid var(--rule); border-radius: 10px; box-shadow: 0 18px 40px -22px rgba(28,19,22,.45); }
+.langs li a { display: block; padding: 9px 12px; border-radius: 6px; color: var(--ink); text-decoration: none; }
+.langs li a:hover { background: rgba(0,0,0,.05); color: var(--bordeaux); }
+.langs li a[aria-current="true"] { color: var(--bordeaux); font-weight: 550; }
+
+/* pages that exist only in English, linked from other languages */
+.en-note { font-size: 0.88em; color: var(--graphite); white-space: nowrap; }
+.band .en-note { color: inherit; opacity: .8; }
+
+/* which languages the app itself is in */
+.app-langs { margin: 18px 0 0; padding: 12px 16px; border-left: 3px solid var(--ember); background: rgba(0,0,0,.035); font-size: 1rem; max-width: 36rem; color: var(--ink); font-variation-settings: "opsz" 16; }

@@ -8,6 +8,7 @@
 <link rel="canonical" href="https://pergamed.com/about/">
 <link rel="alternate" hreflang="en" href="https://pergamed.com/about/">
 <link rel="alternate" hreflang="tr" href="https://pergamed.com/tr/hakkimizda/">
+<link rel="alternate" hreflang="es" href="https://pergamed.com/es/sobre-nosotros/">
 <link rel="alternate" hreflang="x-default" href="https://pergamed.com/about/">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -23,7 +24,7 @@
 <header class="site-header"><div class="inner">
 <a class="wordmark" href="/" aria-label="Pergamed">Pergamed<i>.</i></a>
 <nav class="site-nav" aria-label="Main"><a href="/sutura/">Products</a><a href="/about/" aria-current="page">About us</a><a href="/support/">Support</a></nav>
-<a class="lang" href="/tr/hakkimizda/" hreflang="tr" lang="tr">TR</a>
+<details class="langs"><summary aria-label="Language: English">EN</summary><ul><li><a href="/about/" hreflang="en" lang="en" aria-current="true">English</a></li><li><a href="/tr/hakkimizda/" hreflang="tr" lang="tr">Türkçe</a></li><li><a href="/es/sobre-nosotros/" hreflang="es" lang="es">Español</a></li></ul></details>
 </div></header>
 <main id="main">
 <section class="about-head">
@@ -79,6 +80,11 @@
 if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('js-scenes');
 var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target);}});},{rootMargin:'0px 0px -15% 0px'});
 document.querySelectorAll('.scene .card').forEach(function(c){o.observe(c);});})();
+</script>
+<script>
+(function(){var d=document.querySelector('.langs');if(!d)return;
+document.addEventListener('click',function(e){if(!d.contains(e.target))d.removeAttribute('open');});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')d.removeAttribute('open');});})();
 </script>
 <footer class="site-footer"><div class="inner">
 <div class="legalname"><span class="wm">Pergamed<i>.</i></span>© 2026 Pergamed<br>

@@ -23,7 +23,7 @@
 <header class="site-header"><div class="inner">
 <a class="wordmark" href="/" aria-label="Pergamed">Pergamed<i>.</i></a>
 <nav class="site-nav" aria-label="Main"><a href="/sutura/">Products</a><a href="/about/">About us</a><a href="/support/">Support</a></nav>
-<a class="lang" href="/tr/kosullar/" hreflang="tr" lang="tr">TR</a>
+<details class="langs"><summary aria-label="Language: English">EN</summary><ul><li><a href="/terms/" hreflang="en" lang="en" aria-current="true">English</a></li><li><a href="/tr/kosullar/" hreflang="tr" lang="tr">Türkçe</a></li></ul></details>
 </div></header>
 <main id="main">
 <div class="page legal">
@@ -80,6 +80,11 @@
 </div>
 </main>
 
+<script>
+(function(){var d=document.querySelector('.langs');if(!d)return;
+document.addEventListener('click',function(e){if(!d.contains(e.target))d.removeAttribute('open');});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')d.removeAttribute('open');});})();
+</script>
 <footer class="site-footer"><div class="inner">
 <div class="legalname"><span class="wm">Pergamed<i>.</i></span>© 2026 Pergamed<br>
 <a href="mailto:support@pergamed.com">support@pergamed.com</a></div>
