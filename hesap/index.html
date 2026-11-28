@@ -54,7 +54,7 @@
 </section>
 </main>
 <footer class="site-footer"><div class="inner">
-<div class="legalname"><span class="wm">Pergamed<i>.</i></span><a id="support-link" href="mailto:support@pergamed.com">support@pergamed.com</a></div>
+<div class="legalname"><span class="wm">Pergamed<i>.</i></span>© 2026 Pergamed Yazılım Sanayi ve Ticaret Ltd. Şti.<span class="sep" aria-hidden="true"> · </span><a id="legal-link" href="/legal/">Legal information</a><br><a id="support-link" href="mailto:support@pergamed.com">support@pergamed.com</a></div>
 <nav aria-label="Legal"><a id="privacy-link" href="/privacy/"></a></nav>
 </div></footer>
 <noscript><p style="max-width:30rem;margin:0 auto;padding:0 20px 40px">This page needs JavaScript to complete your request. / Bu sayfanın isteğinizi tamamlaması için JavaScript gerekir.</p></noscript>
@@ -112,6 +112,7 @@
       "err.contact": "Need help? Write to {mail}.",
       retry: "Try again",
       privacy: "Privacy policy",
+      legal: "Legal information",
       toggle: "Türkçe"
     },
     tr: {
@@ -151,6 +152,7 @@
       "err.contact": "Yardım için {mail} adresine yazın.",
       retry: "Tekrar dene",
       privacy: "Gizlilik politikası",
+      legal: "Yasal bilgiler",
       toggle: "English"
     }
   };
@@ -182,6 +184,8 @@
     document.getElementById("lang-toggle").textContent = t("toggle");
     var pl = document.getElementById("privacy-link");
     pl.textContent = t("privacy"); pl.href = lang === "tr" ? "/tr/gizlilik/" : "/privacy/";
+    var ll = document.getElementById("legal-link");
+    ll.textContent = t("legal"); ll.href = lang === "tr" ? "/tr/yasal/" : "/legal/";
     var sl = document.getElementById("support-link");
     sl.textContent = MAIL[lang]; sl.href = "mailto:" + MAIL[lang];
     document.title = (lang === "tr" ? "Hesap" : "Account") + " — Sutura";
